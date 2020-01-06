@@ -5,8 +5,6 @@ import json
 from datetime import datetime
 
 raf = turtle.Turtle()
-screen = turtle.Screen()
-start = {'lat': 39.7684, 'lon': -86.1581}
 
 
 def get_astronauts():
@@ -16,18 +14,19 @@ def get_astronauts():
     astronauts = response.json()['people']
     for name_obj in astronauts:
         astro_dict[name_obj['name']] = name_obj['craft']
-        print("{}is on board the {}".format(name_obj['name'], name_obj['craft']))
     return astro_dict
+    print(astro_dict)
 
 
 def draw_map():
-    
+    screen = turtle.Screen()
     screen.bgpic("map.gif")
     screen.screensize(800, 600)
     screen.setup(720, 360)
     screen.setworldcoordinates(-180, -90, 180, 90)
     image = "iss.gif"
     screen.addshape(image)
+    
     raf.shape(image)
     raf.setheading(45)
     raf.penup()
@@ -39,13 +38,17 @@ def iss_location():
         response = requests.get('http://api.open-notify.org/iss-now.json')
         result = json.loads(response.read())
         response.raise_for_status
+
         loc = result["iss_position"]
         lat = loc["latitude"]
         lon = loc["longitude"]
+
         raf.speed(7)
+        
         print("\nLatitude: " + str(lat))
         print("Longitude: " + str(lon))
-        raf.goto(start)
+        
+        raf.goto(lon, lat)
         time.sleep(5)
 
 
@@ -62,8 +65,7 @@ def over_ind():
     for rt in risetimes:
         time = datetime.fromtimestamp(rt)
         times.append(time)
-    print("The ISS will be over Indianapolis at the following times:{}"
-          .format(time))
+        print("The ISS will be over Indianapolis at the following times:{}".format(time))
     
 
 if __name__ == "__main__":

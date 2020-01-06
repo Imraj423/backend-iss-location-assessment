@@ -9,7 +9,8 @@ screen = turtle.Screen()
 start = {'lat': 39.7684, 'lon': -86.1581}
 
 
-def get_astronauts():
+def main():
+   
     response = requests.get('http://api.open-notify.org/astros.json')
     response.raise_for_status()
     astro_dict = {}
@@ -18,10 +19,6 @@ def get_astronauts():
         astro_dict[name_obj['name']] = name_obj['craft']
         print("{}is on board the {}".format(name_obj['name'], name_obj['craft']))
     return astro_dict
-
-
-def draw_map():
-    
     screen.bgpic("map.gif")
     screen.screensize(800, 600)
     screen.setup(720, 360)
@@ -32,9 +29,6 @@ def draw_map():
     raf.setheading(45)
     raf.penup()
     screen.exitonclick()
-
-
-def iss_location():
     while True:
         response = requests.get('http://api.open-notify.org/iss-now.json')
         result = json.loads(response.read())
@@ -46,10 +40,7 @@ def iss_location():
         print("\nLatitude: " + str(lat))
         print("Longitude: " + str(lon))
         raf.goto(start)
-        time.sleep(5)
-
-
-def over_ind():
+        
     parameters = {'lat': 39.7684, 'lon': -86.1581}
     response = requests.get(
         "http://api.open-notify.org/iss-pass.json", params=parameters)
@@ -64,7 +55,7 @@ def over_ind():
         times.append(time)
     print("The ISS will be over Indianapolis at the following times:{}"
           .format(time))
-    
+
 
 if __name__ == "__main__":
-    get_astronauts(), over_ind(), draw_map(), iss_location()
+    main()

@@ -46,6 +46,7 @@ def iss_location():
         print("\nLatitude: " + str(lat))
         print("Longitude: " + str(lon))
         raf.goto(start)
+        raf.goto(lon, lat)
         time.sleep(5)
 
 
@@ -63,7 +64,7 @@ def over_ind():
         time = datetime.fromtimestamp(rt)
         times.append(time)
     print("The ISS will be over Indianapolis at the following times:{}"
-          .format(time))
+    .format(time))
     
 
 if __name__ == "__main__":
