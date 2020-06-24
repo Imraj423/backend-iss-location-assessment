@@ -20,6 +20,17 @@ def get_astronauts():
     return astro_dict
 
 
+def drawPolyLine(start, squareShape, lineColour="black", fillColour="white"):
+    screen.pencolor(lineColour)
+    screen.fillcolor(fillColour)
+    screen.penup()
+    screen.goto(start)
+    screen.pendown()
+    screen.begin_fill()
+    screen.goto(squareShape)
+    screen.end_fill()
+
+
 def draw_map():
     
     screen.bgpic("map.gif")
@@ -28,6 +39,7 @@ def draw_map():
     screen.setworldcoordinates(-180, -90, 180, 90)
     image = "iss.gif"
     screen.addshape(image)
+    
     raf.shape(image)
     raf.setheading(45)
     raf.penup()
@@ -45,7 +57,7 @@ def iss_location():
         raf.speed(7)
         print("\nLatitude: " + str(lat))
         print("Longitude: " + str(lon))
-        raf.goto(start)
+        raf.goto(lon, lat)
         time.sleep(5)
 
 
@@ -63,8 +75,9 @@ def over_ind():
         time = datetime.fromtimestamp(rt)
         times.append(time)
     print("The ISS will be over Indianapolis at the following times:{}"
-          .format(time))
+    .format(time))
     
 
 if __name__ == "__main__":
-    get_astronauts(), over_ind(), draw_map(), iss_location()
+    get_astronauts(), over_ind(), draw_map(), drawPolyLine(
+        start, squareShape, lineColour='black', fillColour='white'), iss_location()

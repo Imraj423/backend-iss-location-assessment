@@ -28,6 +28,7 @@ def draw_map():
     screen.setworldcoordinates(-180, -90, 180, 90)
     image = "iss.gif"
     screen.addshape(image)
+    
     raf.shape(image)
     raf.setheading(45)
     raf.penup()
@@ -45,7 +46,7 @@ def iss_location():
         raf.speed(7)
         print("\nLatitude: " + str(lat))
         print("Longitude: " + str(lon))
-        raf.goto(start)
+        raf.goto(lon, lat)
         time.sleep(5)
 
 
@@ -63,7 +64,7 @@ def over_ind():
         time = datetime.fromtimestamp(rt)
         times.append(time)
     print("The ISS will be over Indianapolis at the following times:{}"
-          .format(time))
+    .format(time))
     
 
 if __name__ == "__main__":
